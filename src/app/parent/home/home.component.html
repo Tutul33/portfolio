@@ -1,0 +1,23 @@
+<div>
+  <button (click)="saveData()">Save Data</button>
+
+  <table>
+    <thead>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data">
+        <td>{{item.name}}</td>
+        <td>{{item.age}}</td>
+        <td>{{item.address}}</td>
+        <td>
+          <button class="btn btn-sm btn-info" (click)="editData(item.id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteData(item.id)" >Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
