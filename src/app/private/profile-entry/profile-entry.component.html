@@ -1,1 +1,389 @@
-<p>profile-entry works!</p>
+<div class="container">
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <!-- Basic Information -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        formControlName="firstName"
+      />
+      <div
+        *ngIf="
+          profileForm.get('firstName')?.invalid &&
+          profileForm.get('firstName')?.touched
+        "
+        class="text-danger"
+      >
+        First name is required (min 2 chars).
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        formControlName="lastName"
+      />
+      <div
+        *ngIf="
+          profileForm.get('lastName')?.invalid &&
+          profileForm.get('lastName')?.touched
+        "
+        class="text-danger"
+      >
+        Last name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+      <div
+        *ngIf="
+          profileForm.get('email')?.invalid && profileForm.get('email')?.touched
+        "
+        class="text-danger"
+      >
+        Enter a valid email.
+      </div>
+    </div>
+    <!-- Address Field -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea
+        class="form-control"
+        id="address"
+        formControlName="address"
+        rows="3"
+        placeholder="Enter your address"
+        maxlength="200"
+      ></textarea>
+      <div
+        *ngIf="
+          profileForm.get('address')?.invalid &&
+          profileForm.get('address')?.touched
+        "
+        class="text-danger"
+      >
+        Address is required.
+      </div>
+    </div>
+
+    
+    <!-- Phone Field -->
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input
+        type="text"
+        class="form-control"
+        id="phone"
+        formControlName="phone"
+        placeholder="Enter your phone number"
+      />
+      <div
+        *ngIf="
+          profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched
+        "
+        class="text-danger"
+      >
+        Enter a valid phone number.
+      </div>
+    </div>
+
+    <!-- About Me Field (TextArea for 500 words) -->
+    <div class="form-group">
+      <label for="aboutMe">About Me</label>
+      <textarea
+        class="form-control"
+        id="aboutMe"
+        formControlName="aboutMe"
+        rows="6"
+        placeholder="Tell us about yourself (500 words max)"
+        
+      ></textarea>
+      <div
+        *ngIf="
+          profileForm.get('aboutMe')?.invalid &&
+          profileForm.get('aboutMe')?.touched
+        "
+        class="text-danger"
+      >
+        About me is required.
+      </div>
+      <small class="form-text text-muted">Max 500 words.</small>
+    </div>
+
+    <!-- Work Experiences Table -->
+    <div class="d-flex justify-content-start mb-1 align-items-center">
+      <h5>Work Experiences</h5>
+      <button
+        type="button"
+        class="btn btn-primary ms-auto"
+        (click)="addWorkExperience()"
+      >
+        Add Work Experience
+      </button>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="profileWorkExperiences">
+        <tr
+          *ngFor="let work of workExperiences.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input type="text" class="form-control" formControlName="name" />
+          </td>
+          <td>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fromdate"
+            />
+          </td>
+          <td>
+            <input type="date" class="form-control" formControlName="toDate" />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="city" />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="country" />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeWorkExperience(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Social/Web Links Table -->
+    <div class="d-flex justify-content-between mb-1 align-items-center">
+      <h5>Social/Web Links</h5>
+      <button
+        type="button"
+        class="btn btn-primary ms-auto"
+        (click)="addSocialOrWeb()"
+      >
+        Add Social Link
+      </button>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Link/Text</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="profileSocialOrWebs">
+        <tr
+          *ngFor="let social of socials.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input type="text" class="form-control" formControlName="text" />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="description"
+            />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeSocial(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Education and Trainings Table -->
+    <div class="d-flex justify-content-start mb-1 align-items-center">
+      <h5>Education and Trainings</h5>
+      <button
+        type="button"
+        class="btn btn-primary ms-auto"
+        (click)="addEducation()"
+      >
+        Add Education
+      </button>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Certificate Name</th>
+          <th>Institution</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Web</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="profileEducationAndTrainings">
+        <tr
+          *ngFor="let education of educations.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="certificateName"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="institution"
+            />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="city" />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="country" />
+          </td>
+          <td>
+            <input type="url" class="form-control" formControlName="web" />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeEducation(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Language Skills Table -->
+    <div class="d-flex justify-content-start mb-1 align-items-center">
+      <h5>Language Skills</h5>
+      <button
+        type="button"
+        class="btn btn-primary ms-auto"
+        (click)="addLanguageSkill()"
+      >
+        Add Language
+      </button>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Language</th>
+          <th>Level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="profileLanguageSkills">
+        <tr
+          *ngFor="let language of languages.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input type="text" class="form-control" formControlName="name" />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="level" />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeLanguage(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Digital Skills Table -->
+    <div class="d-flex justify-content-start mb-1 align-items-center">
+      <h5>Digital Skills</h5>
+      <button
+        type="button"
+        class="btn btn-primary ms-auto"
+        (click)="addDigitalSkill()"
+      >
+        Add Digital Skill
+      </button>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="profileDigitalSkills">
+        <tr
+          *ngFor="let skill of digitalSkills.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <td>
+            <input type="text" class="form-control" formControlName="name" />
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="level" />
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="removeDigitalSkill(i)"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      class="btn btn-success mt-3"
+      [disabled]="profileForm.invalid"
+    >
+      Submit
+    </button>
+  </form>
+</div>
