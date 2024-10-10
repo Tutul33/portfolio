@@ -13,6 +13,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'private',
+    //component: ,
+    children: [
+      {
+        path: '', 
+        loadChildren: () =>
+          import('./private/private.module').then((m) => m.PrivateModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
