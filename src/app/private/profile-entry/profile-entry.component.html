@@ -78,7 +78,6 @@
       </div>
     </div>
 
-    
     <!-- Phone Field -->
     <div class="form-group">
       <label for="phone">Phone</label>
@@ -108,7 +107,6 @@
         formControlName="aboutMe"
         rows="6"
         placeholder="Tell us about yourself (500 words max)"
-        
       ></textarea>
       <div
         *ngIf="
@@ -378,12 +376,7 @@
     </table>
 
     <!-- Submit Button -->
-    <button
-      type="submit"
-      class="btn btn-success mt-3"
-      [disabled]="profileForm.invalid"
-    >
-      Submit
-    </button>
+    <button type="submit" class="btn btn-success mt-3" [disabled]="profileForm.invalid">Submit</button>
+    <!--  -->
   </form>
 </div>

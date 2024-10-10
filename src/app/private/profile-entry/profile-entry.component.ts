@@ -19,13 +19,18 @@ export class ProfileEntryComponent {
     this.firestoreService.getData(this.collectionName).subscribe((res) => {
       this.data = res;
     });
+    this.addWorkExperience();
+    this.addSocialOrWeb();
+    this.addLanguageSkill();
+    this.addEducation();
+    this.addDigitalSkill();
   }
   createForm() {
     this.profileForm = this.fb.group({
       id: [''],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
+      // age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
       address: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('^\\+?[0-9]{10,12}$')]],
