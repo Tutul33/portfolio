@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ParentRoutingModule } from './parent-routing.module';
+import { PublicRoutingModule } from './public-routing.module';
 import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeroComponent } from './hero/hero.component';
@@ -32,7 +32,7 @@ import { ContactComponent } from './contact/contact.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ParentRoutingModule
+    PublicRoutingModule
   ]
 })
-export class ParentModule { }
+export class PublicModule { }
