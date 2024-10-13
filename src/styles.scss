@@ -211,19 +211,33 @@ h6 {
   background: var(--accent-color);
 }
 
-@media (min-width: 1200px) {
+// @media (min-width: 1200px) {
 
-  .header~main,
-  .header~#footer {
-    margin-left: 300px;
+//   .header~main,
+//   .header~#footer {
+//     margin-left: 300px;
+//   }
+// }
+
+// @media (max-width: 1199px) {
+//   .header {
+//     left: -100%;
+//   }
+// }
+
+@media (min-width: 1200px) {
+  body .header~main,
+  body .header~#footer {
+    margin-left: 300px !important; /* Try adding !important to force the rule */
   }
 }
 
 @media (max-width: 1199px) {
-  .header {
-    left: -100%;
+  body .header {
+    left: -100% !important; /* Try adding !important */
   }
 }
+
 
 .header.header-show {
   left: 0;
