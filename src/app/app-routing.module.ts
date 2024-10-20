@@ -24,6 +24,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'login',
+    //component: ,
+    children: [
+      {
+        path: '', 
+        loadChildren: () =>
+          import('./login/login.module').then((m) => m.LoginModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({
