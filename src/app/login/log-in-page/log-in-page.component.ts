@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LogInPageComponent {
   loginForm!: FormGroup;
-  constructor(private fb: FormBuilder,private authService:AuthService){
+  constructor(private fb: FormBuilder,private authService:AuthService,private router: Router){
 
   }
   ngOnInit(){
@@ -23,7 +24,17 @@ export class LogInPageComponent {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
       // Process form data
-      this.authService.signIn(this.loginForm.value.email,this.loginForm.value.password);
+     this.authService.signIn(this.loginForm.value.email,this.loginForm.value.password).then(user => {
+      // Signed in
+      if(user){
+        this.router.navigate(['/private']);
+      }
+    })
+    .catch(error => {
+      console.error('Sign-in error:', error);
+      throw error; // propagate the error
+    });;
+    
     } else {
       this.loginForm.markAllAsTouched(); // Trigger validation messages
     }
