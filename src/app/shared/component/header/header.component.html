@@ -2,12 +2,10 @@
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
     <div class="profile-img">
-      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+      <a href="javascript:void(0)" [routerLink]="['/']"><img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle"></a>
     </div>
 
-    <a href="/angular-app/home" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
+    <a [routerLink]="['/']" href="javascript:void(0)" class="logo d-flex align-items-center justify-content-center">
       <h1 class="sitename">Tutul Chakma</h1>
     </a>
 
@@ -21,9 +19,9 @@
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="javascript:void(0)" class="active"  (click)="scrollToSection('hero')"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="javascript:void(0)"  (click)="scrollToSection('about')"><i class="bi bi-person navicon"></i> About</a></li>
-        <li><a href="javascript:void(0)" (click)="scrollToSection('resume')"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
+        <li><a href="javascript:void(0)"  class="active"  (click)="goToLinkSection('hero')"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a href="javascript:void(0)"  (click)="goToLinkSection('about')"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="javascript:void(0)"  (click)="goToLinkSection('resume')"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
         <!-- <li><a href="javascript:void(0)" (click)="scrollToSection('portfolio')"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="javascript:void(0)" (click)="scrollToSection('services')"><i class="bi bi-hdd-stack navicon"></i> Services</a></li>
         <li class="dropdown" ><a href="javascript:void(0)"><i class="bi bi-menu-button navicon"></i> <span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
@@ -43,7 +41,7 @@
             <li><a href="javascript:void(0)">Dropdown 4</a></li>
           </ul>
         </li> -->
-        <li><a href="javascript:void(0)" (click)="scrollToSection('contact')"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="javascript:void(0)"  (click)="goToLinkSection('contact')"><i class="bi bi-envelope navicon"></i> Contact</a></li>
         <li><a href="javascript:void(0)" [routerLink]="['/login/sign-in']" *ngIf="!isAuthenticated">{{getAuthenticated()}}<i class="bi bi-box-arrow-in-right navicon"></i> Log In</a></li>
         <li><a href="javascript:void(0)" *ngIf="isAuthenticated" (click)="signOut();"><i class="bi bi-door-open navicon"></i> Log Out</a></li>
       </ul>
