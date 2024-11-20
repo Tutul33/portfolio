@@ -44,6 +44,7 @@ export class HeaderComponent {
   }
 
   signOut(){
-    return this.authService.signOut();
+    this.router.navigate(['/login']);
+    this.authService.signOut();
   }
 }

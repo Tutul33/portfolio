@@ -43,6 +43,9 @@
         </li> -->
         <li><a href="javascript:void(0)"  (click)="goToLinkSection('contact')"><i class="bi bi-envelope navicon"></i> Contact</a></li>
         <li><a href="javascript:void(0)" [routerLink]="['/login/sign-in']" *ngIf="!isAuthenticated">{{getAuthenticated()}}<i class="bi bi-box-arrow-in-right navicon"></i> Log In</a></li>
+        
+        <li><a href="javascript:void(0)" *ngIf="isAuthenticated" [routerLink]="['/private/profileEntry']"><i class="pi pi-user navicon"></i> Profile Entry</a></li>
+        <li><a href="javascript:void(0)" *ngIf="isAuthenticated" [routerLink]="['/private/profileList']"><i class="pi pi-users navicon"></i> Profile List</a></li>
         <li><a href="javascript:void(0)" *ngIf="isAuthenticated" (click)="signOut();"><i class="bi bi-door-open navicon"></i> Log Out</a></li>
       </ul>
     </nav>

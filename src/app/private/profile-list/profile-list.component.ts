@@ -35,6 +35,7 @@ export class ProfileListComponent {
   }
   delete(profile:any){
      try {
+      this.profiles=this.profiles.filter(x=>x.id!=profile.id);
       this.firestoreService.deleteData(this.collectionName,profile.id);
      } catch (error) {
       

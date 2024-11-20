@@ -8,7 +8,7 @@ import { ProfileListComponent } from './profile-list/profile-list.component';
 
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [
     ProfileEntryComponent,
@@ -19,7 +19,8 @@ import { TableModule } from 'primeng/table';
     PrivateRoutingModule,
     ReactiveFormsModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    CalendarModule
   ]
 })
 export class PrivateModule { }
