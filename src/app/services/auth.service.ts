@@ -13,11 +13,11 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password)
       .then(userCredential => {
         // Signed in
-        console.log('User signed in:', userCredential.user);
+        //console.log('User signed in:', userCredential.user);
         return userCredential.user;
       })
       .catch(error => {
-        console.error('Sign-in error:', error);
+        //console.error('Sign-in error:', error);
         throw error; // propagate the error
       });
   }
