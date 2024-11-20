@@ -1,4 +1,8 @@
 <div class="container">
+  <div class="d-flex justify-content-start mb-1 align-items-center">
+    <h5>Profile Entry</h5>
+    <p-button label="Back To List" class="ms-auto rounded-button" size="small" (click)="backToProfileList()"></p-button>
+  </div>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
     <!-- Basic Information -->    
     <div class="form-group">
@@ -146,10 +150,14 @@
             <input type="text" class="form-control" formControlName="name" />
           </td>
           <td>
-            <p-calendar formControlName="fromdate"></p-calendar>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="fromdate"
+            />           
           </td>
           <td>
-            <p-calendar formControlName="toDate"></p-calendar>
+            <input type="date" class="form-control" formControlName="toDate" />           
           </td>
           <td>
             <input type="text" class="form-control" formControlName="city" />

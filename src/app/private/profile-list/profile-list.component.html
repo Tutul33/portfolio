@@ -1,5 +1,8 @@
-<div class="card">
-    <h3>Profile List</h3><br>
+<div class="container">
+    <div class="d-flex justify-content-start mb-1 align-items-center">
+        <h5>Profile List</h5>
+        <p-button label="Add New" class="ms-auto rounded-button" size="small" (click)="addNewProfile()"></p-button>
+      </div>
     <p-table [value]="profiles" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>

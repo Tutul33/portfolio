@@ -41,4 +41,11 @@ export class ProfileListComponent {
       
      }
   }
+  addNewProfile(){
+    try {
+      this.router.navigate(['/private/profileEntry']);
+    } catch (error) {
+      
+    }
+  }
 }

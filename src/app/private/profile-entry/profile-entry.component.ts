@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
@@ -14,7 +15,7 @@ export class ProfileEntryComponent {
   profileForm!: FormGroup;
   public collectionName:string='profile';
   private dataSubscription: Subscription; // Store the subscription
-  constructor(private firestoreService: FirestoreService,private fb: FormBuilder,private dataTransferSvc:DataTransferService) {
+  constructor(private firestoreService: FirestoreService,private fb: FormBuilder,private dataTransferSvc:DataTransferService,private router:Router) {
     this.dataSubscription = this.dataTransferSvc.currentData.subscribe(
       (data:any) => {
         if(data)
@@ -162,6 +163,8 @@ export class ProfileEntryComponent {
        else{
         this.firestoreService.updateData(this.collectionName,this.data.id,this.profileForm.value);
        }
+
+       this.router.navigate(['/private/profileList']);
     } else {
       this.profileForm.markAllAsTouched(); // Trigger validation messages
     }
@@ -270,6 +273,13 @@ export class ProfileEntryComponent {
           })
         );
       });
+    }
+  }
+  backToProfileList(){
+    try {
+      this.router.navigate(['/private/profileList']);
+    } catch (error) {
+      
     }
   }
 }
