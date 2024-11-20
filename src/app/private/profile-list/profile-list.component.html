@@ -1,0 +1,28 @@
+<div class="card">
+    <h3>Profile List</h3><br>
+    <p-table [value]="profiles" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-profile>
+            <tr>
+                <td>{{ profile.firstName }}</td>
+                <td>{{ profile.lastName }}</td>
+                <td>{{ profile.email }}</td>
+                <td>{{ profile.address }}</td>
+                <td>{{ profile.phone }}</td>
+                <td>
+                    <p-button size="small" icon="pi pi-pencil" (click)="edit(profile)"></p-button>
+                    <p-button size="small" icon="pi pi-trash" class="ms-1" severity="danger" (click)="delete(profile)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

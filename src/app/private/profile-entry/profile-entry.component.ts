@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
@@ -8,26 +10,45 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./profile-entry.component.scss']
 })
 export class ProfileEntryComponent {
-  public data: any[] = [];
+  public data: any;
   profileForm!: FormGroup;
   public collectionName:string='profile';
-  constructor(private firestoreService: FirestoreService,private fb: FormBuilder) {}
+  private dataSubscription: Subscription; // Store the subscription
+  constructor(private firestoreService: FirestoreService,private fb: FormBuilder,private dataTransferSvc:DataTransferService) {
+    this.dataSubscription = this.dataTransferSvc.currentData.subscribe(
+      (data:any) => {
+        if(data)
+          this.data = data;
+        console.log('Received Data:', this.data);
+        this.dataSubscription.unsubscribe();
+      }
+    );
+  }
 
   ngOnInit(): void {
+    
     this.createForm();
-    // Fetch data on component load
-    this.firestoreService.getData(this.collectionName).subscribe((res) => {
-      this.data = res;
-    });
+    if(!this.data){
     this.addWorkExperience();
     this.addSocialOrWeb();
     this.addLanguageSkill();
     this.addEducation();
     this.addDigitalSkill();
+    }else{
+      this.patchFormValues();
+    }
   }
+
+  ngOnDestroy() {
+    // Unsubscribe when the component is destroyed
+    if (this.dataSubscription) {
+      this.dataSubscription.unsubscribe();
+    }
+  }
+
   createForm() {
     this.profileForm = this.fb.group({
-      id: [''],
+      //id: [''],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', Validators.required],
       // age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
@@ -134,8 +155,13 @@ export class ProfileEntryComponent {
   // Handle form submission
   onSubmit() {
     if (this.profileForm.valid) {
-      console.log(this.profileForm.value);
+      console.log(JSON.stringify(this.profileForm.value));
       // Process form data
+      if(!this.data)
+        this.firestoreService.saveData(this.collectionName,this.profileForm.value);
+       else{
+        this.firestoreService.updateData(this.collectionName,this.data.id,this.profileForm.value);
+       }
     } else {
       this.profileForm.markAllAsTouched(); // Trigger validation messages
     }
@@ -162,26 +188,88 @@ export class ProfileEntryComponent {
     this.digitalSkills.removeAt(index);
   }
 
-  //Profile operation
-  saveData() {
-    const sampleData = { name: 'John Doe', age: 30 ,address:'Dhaka'};
-    this.firestoreService.saveData(this.collectionName, sampleData)
-      .then(() => console.log('Data saved successfully'))
-      .catch((error) => console.error('Error saving data', error));
-  }
+  
+  // Patch the form with data
+  patchFormValues() {
+    this.profileForm.patchValue({
+      id: this.data.id || '',
+      firstName: this.data.firstName || '',
+      lastName: this.data.lastName || '',
+      address: this.data.address || '',
+      email: this.data.email || '',
+      phone: this.data.phone || '',
+      aboutMe: this.data.aboutMe || '',
+      isActive: this.data.isActive || true
+    });
 
-  //Edit existing data
-  editData(id: string) {
-    const updatedData = { name: 'Jane Doe', age: 32 };
-    this.firestoreService.updateData(this.collectionName, id, updatedData)
-      .then(() => console.log('Data updated successfully'))
-      .catch((error) => console.error('Error updating data', error));
-  }
+    // Patch form arrays (Work Experiences, Socials, etc.)
+    if (this.data.profileWorkExperiences) {
+      this.data.profileWorkExperiences.forEach((workExperience: any) => {
+        this.workExperiences.push(
+          this.fb.group({
+            id: [workExperience.id || ''],
+            name: [workExperience.name || '', Validators.required],
+            fromdate: [workExperience.fromdate || '', Validators.required],
+            toDate: [workExperience.toDate || '', Validators.required],
+            city: [workExperience.city || '', Validators.required],
+            country: [workExperience.country || '', Validators.required],
+            description: [workExperience.description || '']
+          })
+        );
+      });
+    }
 
-  // Delete existing data
-  deleteData(id:string) {
-    this.firestoreService.deleteData(this.collectionName, id)
-      .then(() => console.log('Data deleted successfully'))
-      .catch((error) => console.error('Error deleting data', error));
+    if (this.data.profileSocialOrWebs) {
+      this.data.profileSocialOrWebs.forEach((socialOrWeb: any) => {
+        this.socials.push(
+          this.fb.group({
+            id: [socialOrWeb.id || ''],
+            text: [socialOrWeb.text || '', Validators.required],
+            description: [socialOrWeb.description || '']
+          })
+        );
+      });
+    }
+
+    if (this.data.profileEducationAndTrainings) {
+      this.data.profileEducationAndTrainings.forEach((education: any) => {
+        this.educations.push(
+          this.fb.group({
+            id: [education.id || ''],
+            certificateName: [education.certificateName || '', Validators.required],
+            institution: [education.institution || '', Validators.required],
+            city: [education.city || '', Validators.required],
+            country: [education.country || '', Validators.required],
+            web: [education.web || ''],
+            address: [education.address || ''],
+            grade: [education.grade || '']
+          })
+        );
+      });
+    }
+
+    if (this.data.profileLanguageSkills) {
+      this.data.profileLanguageSkills.forEach((language: any) => {
+        this.languages.push(
+          this.fb.group({
+            id: [language.id || ''],
+            name: [language.name || '', Validators.required],
+            level: [language.level || '', Validators.required]
+          })
+        );
+      });
+    }
+
+    if (this.data.profileDigitalSkills) {
+      this.data.profileDigitalSkills.forEach((digitalSkill: any) => {
+        this.digitalSkills.push(
+          this.fb.group({
+            id: [digitalSkill.id || ''],
+            name: [digitalSkill.name || '', Validators.required],
+            level: [digitalSkill.level || '', Validators.required]
+          })
+        );
+      });
+    }
   }
 }

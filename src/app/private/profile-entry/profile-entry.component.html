@@ -1,14 +1,15 @@
 <div class="container">
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <!-- Basic Information -->
+    <!-- Basic Information -->    
     <div class="form-group">
       <label for="firstName">First Name</label>
       <input
         type="text"
         class="form-control"
-        id="firstName"
+        id="firstName" pInputText
         formControlName="firstName"
       />
+      
       <div
         *ngIf="
           profileForm.get('firstName')?.invalid &&
@@ -123,13 +124,7 @@
     <!-- Work Experiences Table -->
     <div class="d-flex justify-content-start mb-1 align-items-center">
       <h5>Work Experiences</h5>
-      <button
-        type="button"
-        class="btn btn-primary ms-auto"
-        (click)="addWorkExperience()"
-      >
-        Add Work Experience
-      </button>
+      <p-button label="Add Work Experience" class="ms-auto rounded-button" size="small" (click)="addWorkExperience()"></p-button>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -182,13 +177,7 @@
     <!-- Social/Web Links Table -->
     <div class="d-flex justify-content-between mb-1 align-items-center">
       <h5>Social/Web Links</h5>
-      <button
-        type="button"
-        class="btn btn-primary ms-auto"
-        (click)="addSocialOrWeb()"
-      >
-        Add Social Link
-      </button>
+      <p-button label="Add Social Link" class="ms-auto" size="small" (click)="addSocialOrWeb()"></p-button>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -229,13 +218,7 @@
     <!-- Education and Trainings Table -->
     <div class="d-flex justify-content-start mb-1 align-items-center">
       <h5>Education and Trainings</h5>
-      <button
-        type="button"
-        class="btn btn-primary ms-auto"
-        (click)="addEducation()"
-      >
-        Add Education
-      </button>
+      <p-button label="Add Education" class="ms-auto" size="small" (click)="addEducation()"></p-button>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -292,13 +275,7 @@
     <!-- Language Skills Table -->
     <div class="d-flex justify-content-start mb-1 align-items-center">
       <h5>Language Skills</h5>
-      <button
-        type="button"
-        class="btn btn-primary ms-auto"
-        (click)="addLanguageSkill()"
-      >
-        Add Language
-      </button>
+      <p-button label="Add Language" class="ms-auto" size="small" (click)="addLanguageSkill()"></p-button>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -334,14 +311,8 @@
 
     <!-- Digital Skills Table -->
     <div class="d-flex justify-content-start mb-1 align-items-center">
-      <h5>Digital Skills</h5>
-      <button
-        type="button"
-        class="btn btn-primary ms-auto"
-        (click)="addDigitalSkill()"
-      >
-        Add Digital Skill
-      </button>
+      <h5>Digital Skills</h5>      
+      <p-button label="Add Digital Skill" class="ms-auto" size="small" (click)="addDigitalSkill()"></p-button>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -376,7 +347,8 @@
     </table>
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-success mt-3" [disabled]="profileForm.invalid">Submit</button>
-    <!--  -->
+    <!-- <button type="submit" class="btn btn-success mt-3" [disabled]="profileForm.invalid">Submit</button> -->
+    <p-button label="Submit" type="submit" icon="pi pi-check" size="small" [disabled]="profileForm.invalid" ></p-button>
+    
   </form>
 </div>

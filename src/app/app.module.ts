@@ -6,6 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/component/header/header.component';
 import { FooterComponent } from './shared/component/footer/footer.component';
+
+
+
 const environment = {
   production: false,
   firebase: {
@@ -30,6 +33,8 @@ const environment = {
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,  // Firestore module
+
+   
   ],
   providers: [],
   bootstrap: [AppComponent]
