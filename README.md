@@ -5,6 +5,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Prepare & Build Your Angular App
 
 ng build --configuration=production --output-path docs --base-href "https://tutul33.github.io/portfolio/"
+OR 
+npm run build:gh
 
 ## Install Angular CLI GitHub Pages
 
